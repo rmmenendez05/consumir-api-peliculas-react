@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --color-background: #000;
+  --animate-scroll-x: scroll-x 40s linear infinite;
+  @keyframes scroll-x {
+    to { transform: translateX(-50%); }
+  }
+}
+
+/* Esqueleto de carga: fondo gris con un brillo que lo recorre en bucle */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@utility skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: #1c1c1e;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(255 255 255 / 0.04) 30%,
+      rgb(255 255 255 / 0.09) 50%,
+      rgb(255 255 255 / 0.04) 70%,
+      transparent 100%
+    );
+    animation: shimmer 1.6s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::after { animation: none; }
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background min-h-screen;
+  }
+}
